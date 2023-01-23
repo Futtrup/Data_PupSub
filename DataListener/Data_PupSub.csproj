@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{16FF54B3-76D2-4424-A436-7E2365788EBC}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DataListener</RootNamespace>
-    <AssemblyName>DataListener</AssemblyName>
+    <RootNamespace>Data_PubSub</RootNamespace>
+    <AssemblyName>Data_PubSub</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
