@@ -6,28 +6,30 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Data_PupSub
+namespace Data_Poll
 {
-    internal class DataService
+    class DataService
     {
         private CancellationTokenSource _tokenSource;
         private DataProvider _dataProvider;
-        private DataListener _dataListener;
+        private DataPoller _dataPoller;
 
         public void StartDataService()
         {
-            Console.WriteLine("Starting data service - Low Frequence pub-sub notification");
+            Console.WriteLine("Starting data service - High frequence with polling");
 
             _tokenSource = new CancellationTokenSource();
             CancellationToken ct = _tokenSource.Token;
 
-            _dataListener = new DataListener();
-
+            _dataPoller = new DataPoller();
             _dataProvider = new DataProvider();
-            _dataProvider.ValueChanged += (s, e) => _dataListener.UpdateData(e);
-            Task t_dataProvider = Task.Run(() => _dataProvider.Start_LowFreqData_WithEvent(ct), ct);
 
-            Task.WaitAll(t_dataProvider);
+            Task t_dataPoller = Task.Run(() => _dataPoller.StartPollingData(_dataProvider, ct), ct);
+            Task t_dataProvider = Task.Run(() => _dataProvider.Start_HighFreqData_WithoutEvent(ct), ct);
+
+
+
+            Task.WaitAll(t_dataProvider, t_dataPoller);
         }
     }
 }

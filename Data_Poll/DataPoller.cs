@@ -2,16 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Data_SharedLib;
 
-namespace Data_PupSub
+namespace Data_Poll
 {
-    internal class DataListener
+    class DataPoller
     {
         private int _value;
         private bool _initialized = false;
 
-        public void UpdateData(int value)
+        internal void StartPollingData(DataProvider dataProvider, CancellationToken ct)
+        {
+            while (true)
+            {
+                Console.WriteLine("Polling data");
+                int pollValue = dataProvider.Value;
+
+                UpdateData(pollValue);
+
+                Thread.Sleep(2000);
+            }
+        }
+
+        private void UpdateData(int value)
         {
             if (!_initialized)
             {
